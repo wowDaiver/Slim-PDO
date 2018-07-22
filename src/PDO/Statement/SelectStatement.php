@@ -408,7 +408,14 @@ class SelectStatement extends StatementContainer
      */
     public function execute()
     {
-        return parent::execute();
+        $start = microtime(true);
+        $result = parent::execute();
+        $end = microtime(true);
+        if($end - $start>0.1){
+            error_log('Время выполнения запроса: ' . ($end - $start) . ' сек.');
+            error_log('Запрос: ' . self::__toString());
+        }
+        return $result;
     }
 
     /**

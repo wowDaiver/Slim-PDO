@@ -83,7 +83,14 @@ class UpdateStatement extends StatementContainer
      */
     public function execute()
     {
-        return parent::execute()->rowCount();
+        $start = microtime(true);
+        $result = parent::execute()->rowCount();
+        $end = microtime(true);
+        if($end - $start>0.1){
+            error_log('Время выполнения запроса: ' . ($end - $start) . ' сек.');
+            error_log('Запрос: ' . self::__toString());
+        }
+        return $result;
     }
 
     /**

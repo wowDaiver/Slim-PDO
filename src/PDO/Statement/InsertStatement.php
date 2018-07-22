@@ -103,11 +103,17 @@ class InsertStatement extends StatementContainer
      */
     public function execute($insertId = true)
     {
-        if (!$insertId) {
-            return parent::execute();
+        $start = microtime(true);
+        $result = parent::execute();
+        $end = microtime(true);
+        if($end - $start>0.1){
+            error_log('Время выполнения запроса: ' . ($end - $start) . ' сек.');
+            error_log('Запрос: ' . self::__toString());
         }
 
-        parent::execute();
+        if (!$insertId) {
+            return $result;
+        }
 
         return $this->dbh->lastInsertId();
     }
