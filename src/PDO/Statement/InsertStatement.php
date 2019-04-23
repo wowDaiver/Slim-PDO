@@ -106,7 +106,7 @@ class InsertStatement extends StatementContainer
         $start = microtime(true);
         $result = parent::execute();
         $end = microtime(true);
-        if($end - $start>0.1){
+        if($end - $start > 5){
             error_log('Время выполнения запроса: ' . ($end - $start) . ' сек.');
             error_log('Запрос: ' . self::__toString());
         }
